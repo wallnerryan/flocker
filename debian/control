@@ -10,3 +10,10 @@ Architecture: all
 Depends: python2.7, ${misc:Depends}
 Description: really neat package!
  second line can contain extra information about it.
+
+Package: flocker-buildslave
+Architecture: all
+Depends: python2.7, python2.7-dev, python-virtualenv, git,
+	 dh-virtualenv, debhelper, ${misc:Depends},
+	 buildbot-slave
+Description: Configuration for buildslave for flocker
