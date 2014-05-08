@@ -1,1 +1,2 @@
 slave/known_hosts etc/ssh/ssh_known_hosts
+slave/buildbot.tac srv/buildslave/buildbot.tac
