@@ -5,7 +5,8 @@ set -e
 . /usr/share/debconf/confmodule
 
 db_get flocker-buildslave/slavename
-echo $RET > /tmp/slavename
+echo $RET > /srv/flocker-buildslave/slave/slave.name
+echo $RET > /srv/flocker-buildslave/slave/slave.passwd
 
 if ! getent passwd flocker-buildslave>/dev/null; then
     adduser --quiet \
@@ -17,7 +18,7 @@ if ! getent passwd flocker-buildslave>/dev/null; then
         --gecos "Flocker Buildslave" \
         --home /srv/flocker-buildslave \
         flocker-buildslave
-    chown flocker-buildslave:flocker-buildslave /srv/flocker-buildslave
+    chown flocker-buildslave:flocker-buildslave /srv/flocker-buildslave /srv/flocker-buildslave/slave
 fi
 
 #DEBHLPER#
