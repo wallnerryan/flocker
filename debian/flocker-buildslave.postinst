@@ -7,5 +7,17 @@ set -e
 db_get flocker-buildslave/slavename
 echo $RET > /tmp/slavename
 
+if ! getent passwd flocker-buildslave>/dev/null; then
+    adduser --quiet \
+        --system \
+        --disabled-login \
+        --disabled-password \
+        --no-create-home \
+        --group \
+        --gecos "Flocker Buildslave" \
+        --home /srv/flocker-buildslave \
+        flocker-buildslave
+    chown flocker-buildslave:flocker-buildslave /srv/flocker-buildslave
+fi
 
 #DEBHLPER#

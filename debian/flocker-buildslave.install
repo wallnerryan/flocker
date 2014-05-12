@@ -1,2 +1,2 @@
 slave/ssh_known_hosts etc/ssh/ssh_known_hosts
-slave/buildbot.tac srv/buildslave
+slave/buildbot.tac srv/flocker-buildslave

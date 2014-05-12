@@ -1,5 +1,5 @@
 # Upstart service for buildslave.
 start on (local-filesystems and net-device-up IFACE!=lo)
-exec /usr/bin/twistd -ny /srv/buildslave/slave/buildbot.tac
-setuid buildslave
-chdir /srv/buildslave/slave
+exec /usr/bin/twistd -ny /srv/flocker-buildslave/slave/buildbot.tac
+setuid flocker-buildslave
+chdir /srv/flocker-buildslave/slave
