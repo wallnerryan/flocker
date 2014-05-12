@@ -1,0 +1,11 @@
+#!/bin/sh
+set -e
+
+# Source debconf library.
+. /usr/share/debconf/confmodule
+
+db_get flocker-buildslave/slavename
+echo $RET > /tmp/slavename
+
+
+#DEBHLPER#

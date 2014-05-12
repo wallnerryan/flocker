@@ -1,0 +1,3 @@
+Template: flocker-buildslave/slavename
+Type: string
+Description: What is the name of this slave?
