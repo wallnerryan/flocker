@@ -1,27 +1,42 @@
 Debian Packaging
 ****************
 
-Files:
+See debian's `New Maintainer Gudie <https://www.debian.org/doc/manuals/maint-guide/index.en.html`_ for an introduction to debian packaging.
+The following has some notes and specific details on more involved bits.
+
+Debian packaging is controlled by a number of files in the :directory:`debian` directory.
+
+There are serveral required files:
+   - control: This file has metadata about the source package as well as any binary packages.
    - changelog
-   - compat (``== 9``)
-   - control
-   - rules
+   - compat: This specifies the debhelper compatibility level. It should contain ``9``.
+     This is currently the most recent stable compatibility level.
+     It isn't strictly required but debhelper makes the :file:`debian/rules` much shorter.
+   - rules: This file has instructions for building the package.
+     Using debhelper, the minimal file looks as follows::
+
+        #!/usr/bin/make -f
+
+	export DH_ALWAYS_EXCLUDE=flocker/local
+
+	%:
+		dh $@
+
 
 upstart
 =======
 
 To install an upstart service for a package, include it as :file:`debian/<package>.upstart`.
 
+
 debconf
 =======
 
+Debconf is a tools for providing initial configuration for deb packages.
+Debconf configuration can be provided from cloud-init, or a preseed file for bare-metal installation.
 
-Weird interface.
-The primary supported interface is running as a subprocess of the debconf process, and interacting over stdin/stdout.
-If we want to create config files based on debconf values we need to write in shell,
-since various debhelper scripts want to put shell snippets in pre/postinit.
+This shouldn't be the primary method of configuration, but may be useful for getting people running with a simple configuration.
 
-Configurable from cloud-init and via preseeing.
 
 Example
 -------
@@ -67,7 +82,10 @@ Example
 	 SLAVENAME=$RET
 
 	 # Do something with the result
-         echo $SLAVENAME > /tmp/slavename
+	 # XXX This should probably check if this is running from dpkg-reconfigure
+	 if [ -e /tmp/slavename ]; then
+           echo $SLAVENAME > /tmp/slavename
+	 fi
 
 	 db_stop
 
@@ -76,6 +94,7 @@ Example
       This file needs to have a ``#DEBHELPER#`` line that will be substituted with sh snippets from various debhelper commands.
 
 .. [1] https://mknowles.com.au/wordpress/2009/10/09/python-debconf-configuration-by-example/
+
 
 config-package-dev
 ==================
@@ -89,6 +108,7 @@ It does this by:
 
 This is useful when there is a specific static configuraiton that needs to be done,
 but probably less useful if the configuration file needs some user-input added to it.
+
 
 Example
 -------
@@ -142,10 +162,12 @@ To create a user in a package, include something like the following in the posti
        chown flocker-buildslave:flocker-buildslave /srv/flocker-buildslave /srv/flocker-buildslave/slave
    fi
 
+
 References
 ----------
 - https://www.debian.org/doc/debian-policy/ch-files.html#s-permissions-owners
 - https://wiki.debian.org/AccountHandlingInMaintainerScripts
+
 
 Building Packages
 =================
@@ -156,6 +178,7 @@ Building Packages
 
   pbuilder is a tool for creating chroots and building packages in them that just have the declared dependencies installed.
   pdebuilder used pbuilder to build a debian
+
 
 Signing Packages
 ================
