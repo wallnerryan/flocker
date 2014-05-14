@@ -5,8 +5,13 @@ set -e
 . /usr/share/debconf/confmodule
 
 db_get flocker-buildslave/slavename
-echo $RET > /srv/flocker-buildslave/slave/slave.name
-echo $RET > /srv/flocker-buildslave/slave/slave.passwd
+if [ ! -e /srv/flocker-buildslave/slave/slave.name ]; then
+    echo $RET > /srv/flocker-buildslave/slave/slave.name
+fi
+db_get flocker-buildslave/password
+if [ ! -e /srv/flocker-buildslave/slave/slave.passwd ]; then
+    echo $RET > /srv/flocker-buildslave/slave/slave.passwd
+fi
 
 if ! getent passwd flocker-buildslave>/dev/null; then
     adduser --quiet \
