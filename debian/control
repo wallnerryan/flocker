@@ -20,4 +20,5 @@ Depends:
    python2.7, python2.7-dev, python-virtualenv, git,
 # For building packages
    dh-virtualenv, debhelper, ${misc:Depends},
+   pbuilder, cowbuilder
 Description: Configuration for buildslave for flocker
