@@ -9,6 +9,7 @@ Welcome to Flocker's documentation!
 Contents:
 
 .. toctree::
+   packaging
    :maxdepth: 2
 
 
@@ -19,4 +20,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-
