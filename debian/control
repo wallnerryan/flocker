@@ -13,7 +13,11 @@ Description: really neat package!
 
 Package: flocker-buildslave
 Architecture: all
-Depends: python2.7, python2.7-dev, python-virtualenv, git,
-	 dh-virtualenv, debhelper, ${misc:Depends},
-	 buildbot-slave
+Depends:
+# For the buildbot itself
+   buildbot-slave,
+# For testing flocker
+   python2.7, python2.7-dev, python-virtualenv, git,
+# For building packages
+   dh-virtualenv, debhelper, ${misc:Depends},
 Description: Configuration for buildslave for flocker
