@@ -154,9 +154,9 @@ To install ``flocker-node`` on an existing Fedora 20 host, follow these steps:
 
    .. code-block:: console
 
-      yum localinstall http://archive.zfsonlinux.org/fedora/zfs-release$(rpm -E %dist).noarch.rpm
-      yum localinstall http://archive.clusterhq.com/fedora/clusterhq-release$(rpm -E %dist).noarch.rpm
-      yum install flocker-node
+      $ sudo yum localinstall http://archive.zfsonlinux.org/fedora/zfs-release$(rpm -E %dist).noarch.rpm
+      $ sudo yum localinstall http://archive.clusterhq.com/fedora/clusterhq-release$(rpm -E %dist).noarch.rpm
+      $ sudo yum install https://storage.googleapis.com/archive.clusterhq.com/fedora/20/x86_64/python-flocker-0.0.6-1.fc20.noarch.rpm https://storage.googleapis.com/archive.clusterhq.com/fedora/20/x86_64/flocker-node-0.0.6-1.fc20.noarch.rpm
 
 2. Create a ZFS pool.
    For testing purposes, you can create a pool on a loopback device on your existing filesystem:
