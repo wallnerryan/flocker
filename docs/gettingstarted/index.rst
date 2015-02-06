@@ -168,6 +168,8 @@ Getting started with Flocker
 
          Simulate a Flocker cluster with virtual machines on your laptop (requires `Vagrant <http://www.vagrantup.com/downloads>`_, `VirtualBox <https://www.virtualbox.org/wiki/Downloads>`_):
 
+         :version-download:`nodes/Vagrantfile.template`
+
          .. version-code-block:: console
 
             mkdir vagrant-flocker
@@ -188,6 +190,8 @@ Getting started with Flocker
          ^^^^^^^
 
          Simulate a Flocker cluster with virtual machines on your laptop (requires `Vagrant <http://www.vagrantup.com/downloads>`_, `VirtualBox <https://www.virtualbox.org/wiki/Downloads>`_):
+
+         :version-download:`nodes/Vagrantfile.template`
 
          .. version-code-block:: console
 
