@@ -168,14 +168,14 @@ Getting started with Flocker
 
          Simulate a Flocker cluster with virtual machines on your laptop (requires `Vagrant <http://www.vagrantup.com/downloads>`_, `VirtualBox <https://www.virtualbox.org/wiki/Downloads>`_):
 
-         .. code-block:: console
+         .. version-code-block:: console
 
-            you@laptop:~$ git clone \
-              https://github.com/clusterhq/vagrant-flocker && \
-              cd vagrant-flocker && \
-              vagrant up && \
-              [ -e "${SSH_AUTH_SOCK}" ] || eval $(ssh-agent) && \
-              ssh-add ~/.vagrant.d/insecure_private_key
+            mkdir vagrant-flocker
+            cd vagrant-flocker
+            wget https://docs.clusterhq.com/en/|latest-installable|/gettingstarted/nodes/Vagrantfile
+            vagrant up
+            [ -e "${SSH_AUTH_SOCK}" ] || eval $(ssh-agent)
+            ssh-add ~/.vagrant.d/insecure_private_key
 
          AWS
          ^^^
@@ -189,14 +189,14 @@ Getting started with Flocker
 
          Simulate a Flocker cluster with virtual machines on your laptop (requires `Vagrant <http://www.vagrantup.com/downloads>`_, `VirtualBox <https://www.virtualbox.org/wiki/Downloads>`_):
 
-         .. code-block:: console
+         .. version-code-block:: console
 
-            you@laptop:~$ git clone \
-              https://github.com/clusterhq/vagrant-flocker && \
-              cd vagrant-flocker && \
-              vagrant up && \
-              [ -e "${SSH_AUTH_SOCK}" ] || eval $(ssh-agent) && \
-              ssh-add ~/.vagrant.d/insecure_private_key
+            mkdir vagrant-flocker
+            cd vagrant-flocker
+            wget https://docs.clusterhq.com/en/|latest-installable|/gettingstarted/nodes/Vagrantfile
+            vagrant up
+            [ -e "${SSH_AUTH_SOCK}" ] || eval $(ssh-agent)
+            ssh-add ~/.vagrant.d/insecure_private_key
 
          AWS
          ^^^
@@ -295,4 +295,3 @@ Getting started with Flocker
          :alt: Flocker migration diagram
 
       In just a few seconds, you'll see that the Redis container is migrated to the other host, network traffic is re-routed, and your application is still online on both IPs!
-
