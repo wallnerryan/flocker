@@ -13,9 +13,9 @@
 
 from twisted.python.filepath import FilePath
 
+import datetime
 import sys
 import os
-import re
 
 sys.path.insert(0, FilePath(__file__).parent().parent().path)
 
@@ -59,7 +59,12 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Flocker'
-copyright = u'2014, ClusterHQ'
+copyright = u'2014-2015 ClusterHQ'
+
+# If this assert fails, either update the copyright string above,
+# or, if the code is no longer being updated remove the assert.
+assert str(datetime.date.today().year) in copyright, \
+    'Copyright does not include current year'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
