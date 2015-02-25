@@ -442,9 +442,12 @@ class DockerClient(object):
             # stop on this container Docker might well complain it knows
             # not the container of which we speak. To prevent this we poll
             # until it does exist.
+            count = 0
             while not self._blocking_exists(container_name):
                 sleep(0.001)
-                continue
+                count += 1
+                if count > 2000:
+                    raise RuntimeError('docker create > 2 seconds!')
             self._client.start(container_name)
             # Tests fail intermittently because containers cannot be
             # removed after being stopped.  It may be that the stop
@@ -454,8 +457,12 @@ class DockerClient(object):
             # returns before the container is fully created.
             # This is currently only a theory, as the error only occurs
             # on Buildbot, and cannot be reliably re-created.
+            count = 0
             while not self._blocking_started(container_name):
                 sleep(0.001)
+                count += 1
+                if count > 2000:
+                    raise RuntimeError('docker start > 2 seconds!')
         d = deferToThread(_add)
 
         def _extract_error(failure):
