@@ -446,6 +446,16 @@ class DockerClient(object):
                 sleep(0.001)
                 continue
             self._client.start(container_name)
+            # Tests fail intermittently because containers cannot be
+            # removed after being stopped.  It may be that the stop
+            # command sees the container before it is fully started,
+            # and responds with OK, since the container is not running.
+            # This would match with the experience above, where create
+            # returns before the container is fully created.
+            # This is currently only a theory, as the error only occurs
+            # on Buildbot, and cannot be reliably re-created.
+            while not self._blocking_started(container_name):
+                sleep(0.001)
         d = deferToThread(_add)
 
         def _extract_error(failure):
@@ -471,6 +481,18 @@ class DockerClient(object):
             return True
         except APIError:
             return False
+
+    def _blocking_started(self, container_name):
+        """
+        Blocking API to check if container has started.
+
+        :param unicode container_name: The name of the container whose
+            existence we're checking.
+
+        :return: ``True`` if unit is running, otherwise ``False``.
+        """
+        container = self._client.inspect_container(container_name)
+        return container[u'State'][u'Running']
 
     def exists(self, unit_name):
         container_name = self._to_container_name(unit_name)
