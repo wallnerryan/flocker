@@ -334,7 +334,7 @@ CMD sh -c "trap \"\" 2; sleep 3"
         """
         The Docker image is pulled if it is unavailable locally.
         """
-        image = u"busybox:latest"
+        image = u"clusterhq/test_pull_image_if_necessary"
         # Make sure image is gone:
         docker = Client()
         try:

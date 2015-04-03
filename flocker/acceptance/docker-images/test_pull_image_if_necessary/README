@@ -1,0 +1,3 @@
+This is a do-nothing image that exists for use by the Flocker test suite.
+It exists only to verify that an image not locally present is pulled automatically.
+See flocker.node.functional.test_docker.NamespacedDockerClientTests.test_pull_image_if_necessary for details.
