@@ -1,5 +1,5 @@
 FROM busybox:latest
-MAINTAINER ClusterHQ, Inc. <flocker-users@googlegroups.com>
+MAINTAINER ClusterHQ, Inc. <info@clusterhq.com>
 
 ADD README /README
 
