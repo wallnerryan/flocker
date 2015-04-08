@@ -334,6 +334,9 @@ CMD sh -c "trap \"\" 2; sleep 3"
         """
         The Docker image is pulled if it is unavailable locally.
         """
+        # Use an image dedicated to this test.  This image is never used to
+        # start a container so removing it should never fail with any of the
+        # "in use" errors.
         image = u"clusterhq/test_pull_image_if_necessary"
         # Make sure image is gone:
         docker = Client()
