@@ -1,6 +1,6 @@
 FROM busybox:latest
 MAINTAINER ClusterHQ, Inc. <info@clusterhq.com>
 
-ADD README /README
+ADD README.rst /README.rst
 
-CMD ["cat", "/README"]
+CMD ["cat", "/README.rst"]
