@@ -517,6 +517,15 @@ class DockerClient(object):
                 # Can't figure out how to get test coverage for this, but
                 # it's definitely necessary:
                 raise
+
+            # Just because we got a response doesn't mean Docker has actually
+            # updated any internal state yet! So if e.g. we attempt to remove
+            # the image used by this container Docker might well complain that
+            # the image is still in use.
+            while self._blocking_exists(container_name):
+                sleep(0.001)
+                continue
+
         d = deferToThread(_remove)
         return d
 
