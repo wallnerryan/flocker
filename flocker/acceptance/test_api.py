@@ -313,7 +313,7 @@ class ContainerAPITests(TestCase):
         and container dictionary once the container is up and running.
         """
         data = {
-            u"name": random_name(),
+            u"name": random_name(self),
             u"host": None,
             u"image": "clusterhq/flask:latest",
             u"ports": [{u"internal": 80, u"external": 8080}],
@@ -351,7 +351,7 @@ class ContainerAPITests(TestCase):
         cluster.
         """
         data = {
-            u"name": random_name(),
+            u"name": random_name(self),
             u"host": None,
             u"image": "clusterhq/flaskenv:latest",
             u"ports": [{u"internal": 8080, u"external": 8081}],
@@ -403,7 +403,7 @@ class ContainerAPITests(TestCase):
         def created_dataset(result):
             cluster, dataset = result
             mongodb = {
-                u"name": random_name(),
+                u"name": random_name(self),
                 u"host": cluster.nodes[0].address,
                 u"image": MONGO_IMAGE,
                 u"ports": [{u"internal": 27017, u"external": 27017}],

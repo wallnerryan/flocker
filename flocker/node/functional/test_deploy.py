@@ -34,7 +34,7 @@ class DeployerTests(TestCase):
         Stopped applications that are supposed to be running are restarted
         when ``Deployer.change_node_state`` is run.
         """
-        name = random_name()
+        name = random_name(self)
         docker_client = DockerClient()
         deployer = P2PNodeDeployer(
             u"localhost",
@@ -84,7 +84,7 @@ class DeployerTests(TestCase):
         image = DockerImageBuilder(test=self, source_dir=docker_dir)
         image_name = image.build()
 
-        application_name = random_name()
+        application_name = random_name(self)
 
         docker_client = DockerClient()
         self.addCleanup(docker_client.remove, application_name)
@@ -152,7 +152,7 @@ class DeployerTests(TestCase):
         image = DockerImageBuilder(test=self, source_dir=docker_dir)
         image_name = image.build()
 
-        application_name = random_name()
+        application_name = random_name(self)
 
         docker_client = DockerClient()
         self.addCleanup(docker_client.remove, application_name)
@@ -224,7 +224,7 @@ class DeployerTests(TestCase):
         EXPECTED_MEMORY_LIMIT = 100000000
         image = DockerImage.from_string(u"openshift/busybox-http-app")
 
-        application_name = random_name()
+        application_name = random_name(self)
 
         docker_client = DockerClient()
         self.addCleanup(docker_client.remove, application_name)
@@ -272,7 +272,7 @@ class DeployerTests(TestCase):
 
         image = DockerImage.from_string(u"openshift/busybox-http-app")
 
-        application_name = random_name()
+        application_name = random_name(self)
 
         docker_client = DockerClient()
         self.addCleanup(docker_client.remove, application_name)
