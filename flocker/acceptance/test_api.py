@@ -145,7 +145,7 @@ class ContainerAPITests(TestCase):
         def created_dataset(result):
             cluster, dataset = result
             mongodb = {
-                u"name": random_name(),
+                u"name": random_name(self),
                 u"host": cluster.nodes[0].address,
                 u"image": MONGO_IMAGE,
                 u"ports": [{u"internal": 27017, u"external": 27017}],
