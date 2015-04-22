@@ -15,11 +15,12 @@ from yaml import safe_dump
 from twisted.web.http import OK, CREATED
 from twisted.python.filepath import FilePath
 from twisted.python.procutils import which
+from twisted.python.failure import Failure
 
 from eliot import Logger, start_action
 from eliot.twisted import DeferredContext
 
-from treq import get, post, delete, json_content
+from treq import get, post, delete, content, json_content
 from pyrsistent import PRecord, field, CheckedPVector, pmap
 
 from ..control import (
@@ -436,9 +437,17 @@ def check_and_decode_json(result, response_code, request_url):
     :return: ``Deferred`` firing with decoded JSON.
     """
     if result.code != response_code:
-        raise ValueError(
-            "Unexpected response code:", result.code, request_url, result
+        d = content(result)
+        d.addCallback(
+            lambda body:
+                Failure(ValueError(
+                    "Unexpected response code:",
+                    result.code,
+                    request_url,
+                    body,
+                ))
         )
+        return d
     return json_content(result)
 
 
