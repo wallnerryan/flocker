@@ -383,9 +383,14 @@ CMD sh -c "trap \"\" 2; sleep 3"
         """
         The Docker image is pulled if it is unavailable locally.
         """
-        # Use an image that isn't likely to be in use by anything, since
-        # it's old, and isn't used by other tests:
-        image = u"busybox:ubuntu-12.04"
+        # Use an image dedicated to this test.  This image is never used to
+        # start a container so removing it should never fail with any of the
+        # "in use" errors.  Note that no particular tag of this image is being
+        # pulled here.  The image *shouldn't* ever need to be changed because
+        # its purpose is merely to exist.  However, if it does need to change
+        # for some reason it may make sense to push the changes to a
+        # differently named image or some specific tag of this image.
+        image = u"clusterhq/test_pull_image_if_necessary"
         # Make sure image is gone:
         docker = Client()
         try:
