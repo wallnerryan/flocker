@@ -1301,7 +1301,7 @@ class IBlockDeviceAPITestsMixin(object):
         dataset_id = uuid4()
         new_volume = self.api.create_volume(
             dataset_id=dataset_id,
-            size=REALISTIC_BLOCKDEVICE_SIZE)
+            size=self.block_size)
         self.assertIn(new_volume, self.api.list_volumes())
 
     def test_listed_volume_attributes(self):
@@ -1312,11 +1312,11 @@ class IBlockDeviceAPITestsMixin(object):
         expected_dataset_id = uuid4()
         self.api.create_volume(
             dataset_id=expected_dataset_id,
-            size=REALISTIC_BLOCKDEVICE_SIZE
+            size=self.block_size
         )
         [listed_volume] = self.api.list_volumes()
         self.assertEqual(
-            (expected_dataset_id, REALISTIC_BLOCKDEVICE_SIZE),
+            (expected_dataset_id, self.block_size),
             (listed_volume.dataset_id, listed_volume.size)
         )
 
@@ -1328,10 +1328,10 @@ class IBlockDeviceAPITestsMixin(object):
         expected_dataset_id = uuid4()
         new_volume = self.api.create_volume(
             dataset_id=expected_dataset_id,
-            size=REALISTIC_BLOCKDEVICE_SIZE
+            size=self.block_size
         )
         self.assertEqual(
-            (expected_dataset_id, REALISTIC_BLOCKDEVICE_SIZE),
+            (expected_dataset_id, self.block_size),
             (new_volume.dataset_id, new_volume.size)
         )
 
@@ -1356,7 +1356,7 @@ class IBlockDeviceAPITestsMixin(object):
 
         new_volume = self.api.create_volume(
             dataset_id=dataset_id,
-            size=REALISTIC_BLOCKDEVICE_SIZE
+            size=self.block_size
         )
         attached_volume = self.api.attach_volume(
             new_volume.blockdevice_id, attach_to=self.this_node,
@@ -1380,7 +1380,7 @@ class IBlockDeviceAPITestsMixin(object):
 
         new_volume = self.api.create_volume(
             dataset_id=uuid4(),
-            size=REALISTIC_BLOCKDEVICE_SIZE
+            size=self.block_size
         )
         attached_volume = self.api.attach_volume(
             new_volume.blockdevice_id,
@@ -1401,7 +1401,7 @@ class IBlockDeviceAPITestsMixin(object):
         dataset_id = uuid4()
         new_volume = self.api.create_volume(
             dataset_id=dataset_id,
-            size=REALISTIC_BLOCKDEVICE_SIZE
+            size=self.block_size
         )
         expected_volume = BlockDeviceVolume(
             blockdevice_id=new_volume.blockdevice_id,
@@ -1422,7 +1422,7 @@ class IBlockDeviceAPITestsMixin(object):
         dataset_id = uuid4()
         new_volume = self.api.create_volume(
             dataset_id=dataset_id,
-            size=REALISTIC_BLOCKDEVICE_SIZE
+            size=self.block_size
         )
         expected_volume = BlockDeviceVolume(
             blockdevice_id=new_volume.blockdevice_id,
@@ -1443,11 +1443,11 @@ class IBlockDeviceAPITestsMixin(object):
         """
         new_volume1 = self.api.create_volume(
             dataset_id=uuid4(),
-            size=REALISTIC_BLOCKDEVICE_SIZE
+            size=self.block_size
         )
         new_volume2 = self.api.create_volume(
             dataset_id=uuid4(),
-            size=REALISTIC_BLOCKDEVICE_SIZE
+            size=self.block_size
         )
         attached_volume = self.api.attach_volume(
             blockdevice_id=new_volume2.blockdevice_id,
@@ -1464,11 +1464,11 @@ class IBlockDeviceAPITestsMixin(object):
         """
         volume1 = self.api.create_volume(
             dataset_id=uuid4(),
-            size=REALISTIC_BLOCKDEVICE_SIZE
+            size=self.block_size
         )
         volume2 = self.api.create_volume(
             dataset_id=uuid4(),
-            size=REALISTIC_BLOCKDEVICE_SIZE
+            size=self.block_size
         )
         attached_volume1 = self.api.attach_volume(
             volume1.blockdevice_id, attach_to=self.this_node,
@@ -1502,7 +1502,7 @@ class IBlockDeviceAPITestsMixin(object):
         """
         new_volume = self.api.create_volume(
             dataset_id=uuid4(),
-            size=REALISTIC_BLOCKDEVICE_SIZE
+            size=self.block_size
         )
         exception = self.assertRaises(
             UnattachedVolume,
@@ -1518,7 +1518,7 @@ class IBlockDeviceAPITestsMixin(object):
         """
         new_volume = self.api.create_volume(
             dataset_id=uuid4(),
-            size=REALISTIC_BLOCKDEVICE_SIZE
+            size=self.block_size
         )
         attached_volume = self.api.attach_volume(
             new_volume.blockdevice_id,
@@ -1537,7 +1537,7 @@ class IBlockDeviceAPITestsMixin(object):
         """
         new_volume = self.api.create_volume(
             dataset_id=uuid4(),
-            size=REALISTIC_BLOCKDEVICE_SIZE
+            size=self.block_size
         )
         attached_volume = self.api.attach_volume(
             new_volume.blockdevice_id,
@@ -1556,7 +1556,7 @@ class IBlockDeviceAPITestsMixin(object):
         """
         volume = self.api.create_volume(
             dataset_id=uuid4(),
-            size=REALISTIC_BLOCKDEVICE_SIZE,
+            size=self.block_size,
         )
         self.api.destroy_volume(volume.blockdevice_id)
         exception = self.assertRaises(
@@ -1571,11 +1571,11 @@ class IBlockDeviceAPITestsMixin(object):
         """
         unrelated = self.api.create_volume(
             dataset_id=uuid4(),
-            size=REALISTIC_BLOCKDEVICE_SIZE,
+            size=self.block_size,
         )
         volume = self.api.create_volume(
             dataset_id=uuid4(),
-            size=REALISTIC_BLOCKDEVICE_SIZE,
+            size=self.block_size,
         )
         self.api.destroy_volume(volume.blockdevice_id)
         self.assertEqual([unrelated], self.api.list_volumes())
@@ -1586,7 +1586,7 @@ class IBlockDeviceAPITestsMixin(object):
             destroyed.
         """
         volume = self.api.create_volume(
-            dataset_id=uuid4(), size=REALISTIC_BLOCKDEVICE_SIZE
+            dataset_id=uuid4(), size=self.block_size
         )
         self.api.destroy_volume(volume.blockdevice_id)
         return volume
@@ -1622,7 +1622,7 @@ class IBlockDeviceAPITestsMixin(object):
         ``blockdevice_id`` is not attached to a host.
         """
         volume = self.api.create_volume(
-            dataset_id=uuid4(), size=REALISTIC_BLOCKDEVICE_SIZE
+            dataset_id=uuid4(), size=self.block_size
         )
         exception = self.assertRaises(
             UnattachedVolume,
@@ -1649,7 +1649,7 @@ class IBlockDeviceAPITestsMixin(object):
 
         # Create an unrelated, attached volume that should be undisturbed.
         unrelated = self.api.create_volume(
-            dataset_id=uuid4(), size=REALISTIC_BLOCKDEVICE_SIZE
+            dataset_id=uuid4(), size=self.block_size
         )
         unrelated = self.api.attach_volume(
             unrelated.blockdevice_id, attach_to=self.this_node
@@ -1657,7 +1657,7 @@ class IBlockDeviceAPITestsMixin(object):
 
         # Create the volume we'll detach.
         volume = self.api.create_volume(
-            dataset_id=uuid4(), size=REALISTIC_BLOCKDEVICE_SIZE
+            dataset_id=uuid4(), size=self.block_size
         )
         volume = self.api.attach_volume(
             volume.blockdevice_id, attach_to=self.this_node
@@ -1691,7 +1691,7 @@ class IBlockDeviceAPITestsMixin(object):
         """
         # Create the volume we'll detach.
         volume = self.api.create_volume(
-            dataset_id=uuid4(), size=REALISTIC_BLOCKDEVICE_SIZE
+            dataset_id=uuid4(), size=self.block_size
         )
         attached_volume = self.api.attach_volume(
             volume.blockdevice_id, attach_to=self.this_node
@@ -1728,7 +1728,7 @@ class IBlockDeviceAPITestsMixin(object):
             UnknownVolume,
             self.api.resize_volume,
             blockdevice_id=blockdevice_id,
-            size=REALISTIC_BLOCKDEVICE_SIZE * 10,
+            size=self.block_size * 10,
         )
         self.assertEqual(exception.args, (blockdevice_id,))
 
@@ -1740,13 +1740,13 @@ class IBlockDeviceAPITestsMixin(object):
         """
         unrelated_volume = self.api.create_volume(
             dataset_id=uuid4(),
-            size=REALISTIC_BLOCKDEVICE_SIZE,
+            size=self.block_size,
         )
         original_volume = self.api.create_volume(
             dataset_id=uuid4(),
-            size=REALISTIC_BLOCKDEVICE_SIZE,
+            size=self.block_size,
         )
-        new_size = REALISTIC_BLOCKDEVICE_SIZE * 8
+        new_size = self.block_size * 8
         self.api.resize_volume(original_volume.blockdevice_id, new_size)
         larger_volume = original_volume.set(size=new_size)
 
@@ -1766,7 +1766,7 @@ class IBlockDeviceAPITestsMixin(object):
             UnknownVolume,
             self.api.resize_volume,
             blockdevice_id=volume.blockdevice_id,
-            size=REALISTIC_BLOCKDEVICE_SIZE,
+            size=self.block_size,
         )
         self.assertEqual(exception.args, (volume.blockdevice_id,))
 
@@ -1786,15 +1786,19 @@ class IBlockDeviceAPITestsMixin(object):
         self.assertNotIn(flocker_volume, self.api.list_volumes())
 
 
-def make_iblockdeviceapi_tests(blockdevice_api_factory):
+def make_iblockdeviceapi_tests(blockdevice_api_factory, block_size=None):
     """
+    :param int block_size: block size in bytes.
     :returns: A ``TestCase`` with tests that will be performed on the
        supplied ``IBlockDeviceAPI`` provider.
     """
+    if block_size is None:
+        block_size = REALISTIC_BLOCKDEVICE_SIZE
     class Tests(IBlockDeviceAPITestsMixin, SynchronousTestCase):
         def setUp(self):
             self.api = blockdevice_api_factory(test_case=self)
             self.this_node = self.api.compute_instance_id()
+            self.block_size = block_size
 
     return Tests
 
