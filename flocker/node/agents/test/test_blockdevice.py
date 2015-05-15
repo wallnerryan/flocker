@@ -1794,6 +1794,7 @@ def make_iblockdeviceapi_tests(blockdevice_api_factory, block_size=None):
     """
     if block_size is None:
         block_size = REALISTIC_BLOCKDEVICE_SIZE
+
     class Tests(IBlockDeviceAPITestsMixin, SynchronousTestCase):
         def setUp(self):
             self.api = blockdevice_api_factory(test_case=self)
