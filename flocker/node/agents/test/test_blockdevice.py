@@ -1357,7 +1357,7 @@ class IBlockDeviceAPITestsMixin(object):
         # volume size. See
         # https://clusterhq.atlassian.net/browse/FLOC-1874
         volume_size_GiB = int(Byte(listed_volume.size).to_GiB().value)
-        create_size_GiB = int(Byte(REALISTIC_BLOCKDEVICE_SIZE).to_GiB().value)
+        create_size_GiB = int(Byte(self.block_size).to_GiB().value)
         self.assertEqual(
             (expected_dataset_id, self.block_size),
             (listed_volume.dataset_id, listed_volume.size)
@@ -1380,7 +1380,7 @@ class IBlockDeviceAPITestsMixin(object):
         # volume size. See
         # https://clusterhq.atlassian.net/browse/FLOC-1874
         volume_size_GiB = int(Byte(new_volume.size).to_GiB().value)
-        create_size_GiB = int(Byte(REALISTIC_BLOCKDEVICE_SIZE).to_GiB().value)
+        create_size_GiB = int(Byte(self.block_size).to_GiB().value)
         self.assertEqual(
             (expected_dataset_id, self.block_size),
             (new_volume.dataset_id, new_volume.size)
@@ -1407,13 +1407,13 @@ class IBlockDeviceAPITestsMixin(object):
 
         new_volume = self.api.create_volume(
             dataset_id=dataset_id,
-            size=REALISTIC_BLOCKDEVICE_SIZE
+            size=self.block_size
         )
         attached_volume = self.api.attach_volume(
             new_volume.blockdevice_id, attach_to=self.this_node,
         )
 
-        self._assert_volume_size(attached_volume, REALISTIC_BLOCKDEVICE_SIZE)
+        self._assert_volume_size(attached_volume, self.block_size)
 
     def test_attach_attached_volume(self):
         """
